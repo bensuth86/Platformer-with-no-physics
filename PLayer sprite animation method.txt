@@ -1,0 +1,20 @@
+    def animate(self, animation):  # n = 1; animates all frames over a period of 1 second (controls animation speed)
+
+        time_period = animation["T"] / len(animation[self.direction])  # time period for which a single anim frame displayed
+        # self.elapsed_time += self.game.dt  # time elapsed since start of animation
+        self.game.elapsed_time += self.game.dt
+        # current_frame = int(self.elapsed_time // time_period)  # current_frame -1 for index position of animation list
+
+        rem_new = self.game.elapsed_time % time_period  # remainder used to detect when elapsed time has increased by a single time period, and therefore go to next frame
+        if rem_new < self.game.rem_past:
+            self.current_frame += 1
+
+        self.game.rem_past = rem_new
+
+        if self.current_frame == len(animation[self.direction]):
+            # self.elapsed_time = 0  # reset for next animation
+            self.current_frame = 0
+            return True
+
+        # self.image = animation[self.direction][current_frame]
+        self.image = animation[self.direction][self.current_frame]
